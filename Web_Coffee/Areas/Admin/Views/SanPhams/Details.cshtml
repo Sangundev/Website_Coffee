@@ -1,0 +1,64 @@
+﻿@model Web_Coffee.Models.SanPham
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+<div id="page-wrapper">
+    <div id="page-inner">
+        <h2>Details</h2>
+
+        <div>
+            <h4>SanPham</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.LoaiSanPham.TenLoaiSanPham)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LoaiSanPham.TenLoaiSanPham)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TenSanPham)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TenSanPham)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.GiaBan)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GiaBan)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Hinhanh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Hinhanh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChuThich)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChuThich)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.MaSanPham }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>

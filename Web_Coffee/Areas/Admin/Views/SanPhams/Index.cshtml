@@ -1,0 +1,73 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<Web_Coffee.Models.SanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<div id="page-wrapper">
+    <div id="page-inner">
+     <p>
+   
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LoaiSanPham.TenLoaiSanPham)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TenSanPham)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().GiaBan)
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ChuThich)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSanPham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSanPham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaBan)
+            </td>
+            <td>
+                <img src="@item.Hinhanh" alt="@item.TenSanPham" style="max-width: 100px; max-height: 100px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChuThich)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "SanPhams", new { id = item.MaSanPham })" class="btn btn-primary btn-sm" title="Edit">
+                    <i class="fa fa-pencil"></i> Edit
+                </a>
+                <a href="@Url.Action("Details", "SanPhams", new { id = item.MaSanPham })" class="btn btn-info btn-sm" title="Details">
+                    <i class="fa fa-info-circle"></i> Details
+                </a>
+                <a href="@Url.Action("Delete", "SanPhams", new { id = item.MaSanPham })" class="btn btn-danger btn-sm" title="Delete">
+                    <i class="fa fa-trash"></i> Delete
+                </a>
+            </td>
+
+        </tr>
+    }
+</table>
+
+<div style="text-align: center;">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>
+    </div>
+<!-- /. PAGE INNER  -->
+</div>
