@@ -1,0 +1,66 @@
+﻿@model Web_Coffee.Models.SanPham
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .row {
+        padding-top: 34px;
+        margin-top: 57px;
+    }
+    img.img-fluid.fixed-size-img.rounded-3.mb-3 {
+        margin-left: 226px;
+    }
+    .fixed-size-img {
+        width: 300px; /* Đặt chiều rộng cố định */
+        height: 300px; /* Đặt chiều cao cố định */
+        object-fit: cover; /* Đảm bảo hình ảnh được cắt gọn để phù hợp với kích thước */
+    }
+</style>
+
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <img class="img-fluid fixed-size-img rounded-3 mb-3" src="@Model.Hinhanh" alt="@Model.TenSanPham" />
+    </div>
+    <div class="col-md-8">
+        <h4>Product Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.LoaiSanPham.TenLoaiSanPham)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.LoaiSanPham.TenLoaiSanPham)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.TenSanPham)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TenSanPham)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.GiaBan)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.GiaBan)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ChuThich)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ChuThich)
+            </dd>
+        </dl>
+        <div class="mt-4">
+            @Html.ActionLink("Add to cart", "Edit", new { id = Model.MaSanPham }, new { @class = "btn btn-primary me-2" }) 
+            @Html.ActionLink("Back to List", "Index", "Home", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>

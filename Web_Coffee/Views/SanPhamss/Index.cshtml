@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Web_Coffee.Models.SanPham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    int itemsPerPage = 6; // Số sản phẩm mỗi slide
+    int totalItems = Model.Count(); // Tổng số sản phẩm
+    int numSlides = (int)Math.Ceiling((double)totalItems / itemsPerPage); // Số lượng slide cần thiết
+}
+
+<style>
+        .fixed-size-img {
+            width: 200px; /* Đặt chiều rộng cố định */
+        height: 200px; /* Đặt chiều cao cố định */
+        object-fit: cover; /* Đảm bảo hình ảnh được cắt gọn để phù hợp với kích thước */
+    }
+</style>
+
+
+    <div class="row h-100">
+        <div class="col-lg-7 mx-auto text-center mt-7 mb-5">
+            <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Popular items</h5>
+        </div>
+        <div class="col-12">
+            <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
+                <div class="carousel-inner">
+                    @for (int slideIndex = 0; slideIndex < numSlides; slideIndex++)
+                    {
+                        var slideItems = Model.Skip(slideIndex * itemsPerPage).Take(itemsPerPage);
+                        <div class="carousel-item @(slideIndex == 0 ? "active" : "")" data-bs-interval="10000">
+                            <div class="row gx-3 h-100 align-items-center">
+                                @foreach (var item in slideItems)
+                                {
+                                    <div class="col-12 col-md-4 col-lg-2 mb-5 h-100">
+                                        <div class="card card-span h-100 rounded-3">
+                                            <a href="@Url.Action("Details", "SanPhamss", new { id = item.MaSanPham })">
+                                                <img class="img-fluid fixed-size-img rounded-3" src="@item.Hinhanh" alt="..." />
+                                            </a>
+                                            <div class="card-body ps-0">
+                                                <h5 src="" class="fw-bold text-1000 text-truncate mb-1">@item.TenSanPham</h5>
+                                                <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">@item.LoaiSanPham.TenLoaiSanPham</span></div>
+                                                <span class="text-1000 fw-bold">@item.GiaBan</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="#!" role="button">Order now</a></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev carousel-icon" type="button" data-bs-target="#carouselPopularItems" data-bs-slide="prev"><span class="carousel-control-prev-icon hover-top-shadow" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+                <button class="carousel-control-next carousel-icon" type="button" data-bs-target="#carouselPopularItems" data-bs-slide="next"><span class="carousel-control-next-icon hover-top-shadow" aria-hidden="true"></span><span class="visually-hidden">Next </span></button>
+            </div>
+        </div>
+    </div>
+
