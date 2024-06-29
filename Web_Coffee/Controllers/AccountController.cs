@@ -409,7 +409,10 @@ namespace Web_Coffee.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            // Xóa session giỏ hàng
+            Session["Cart"] = null;
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
             return RedirectToAction("Index", "Home");
         }
 

@@ -52,7 +52,10 @@
     <main class="main" id="top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
             <div class="container">
-                <a class="navbar-brand d-inline-flex" href="index.html"><img class="d-inline-block" src="~/Content/Layout/img/gallery/cf.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">CàfeRuNam</span></a>
+                <a class="navbar-brand d-inline-flex" href="@Url.Action("Index", "Home")">
+                    <img class="d-inline-block" src="~/Content/Layout/img/gallery/cf.svg" alt="logo" />
+                    <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">CàfeRuNam</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
                 @if (Request.IsAuthenticated)
                 {
@@ -72,6 +75,14 @@
                                         <i class="fas fa-search input-box-icon text-primary"></i>
                                         <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
                                     </div>
+                                    <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-white shadow-warning text-warning position-relative">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            @Html.Action("CountCartItems", "ShoppingCart")
+                                            <span class="visually-hidden">items in cart</span>
+                                        </span>
+                                    </a>
+
                                     <button href=" @Url.Action("LogOff", "Account")" class="btn btn-white shadow-warning text-warning" type="submit"> <i class="fas fa-user me-2"></i>LogOff</button>
                                 </form>
                             </div>
@@ -90,12 +101,22 @@
                                 <i class="fas fa-search input-box-icon text-primary"></i>
                                 <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
                             </div>
-                            @*@Html.Partial("_LoginPartial")*@
-                            <a href="@Url.Action("Login", "Account")" class="btn btn-white shadow-warning text-warning">
+                            @* @Html.Partial("_LoginPartial") *@
+                            <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-white shadow-warning text-warning position-relative">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @Html.Action("CountCartItems", "ShoppingCart")
+                                    <span class="visually-hidden">items in cart</span>
+                                </span>
+                            </a>
+
+                            <a href="@Url.Action("Login", "Account")" class="btn btn-white shadow-warning text-warning me-2">
                                 <i class="fas fa-user me-2"></i>Login
                             </a>
+
                         </form>
                     </div>
+
                 }
             </div>
         </nav>

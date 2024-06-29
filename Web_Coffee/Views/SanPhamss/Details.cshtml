@@ -59,7 +59,11 @@
             </dd>
         </dl>
         <div class="mt-4">
-            @Html.ActionLink("Add to cart", "Edit", new { id = Model.MaSanPham }, new { @class = "btn btn-primary me-2" }) 
+            @using (Html.BeginForm("AddToCart", "ShoppingCart", FormMethod.Post))
+            {
+                @Html.Hidden("id", Model.MaSanPham)
+                <button type="submit" class="btn btn-primary me-2">Add to Cart</button>
+            }
             @Html.ActionLink("Back to List", "Index", "Home", null, new { @class = "btn btn-secondary" })
         </div>
     </div>

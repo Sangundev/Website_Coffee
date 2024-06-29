@@ -14,7 +14,7 @@ namespace Web_Coffee.Models
         {
             ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
         }
-
+        
         [Key]
         public int MaSanPham { get; set; }
 
