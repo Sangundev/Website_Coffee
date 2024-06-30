@@ -10,7 +10,7 @@
 
 <style>
         .fixed-size-img {
-            width: 200px; /* Đặt chiều rộng cố định */
+            width: 200px; 
         height: 200px; /* Đặt chiều cao cố định */
         object-fit: cover; /* Đảm bảo hình ảnh được cắt gọn để phù hợp với kích thước */
     }
@@ -42,7 +42,8 @@
                                                 <span class="text-1000 fw-bold">@item.GiaBan</span>
                                             </div>
                                         </div>
-                                        <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="#!" role="button">Order now</a></div>
+                                        <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="@Url.Action("Details", "SanPhamss", new { id = item.MaSanPham })" role="button">Order now</a></div>
+                                        
                                     </div>
                                 }
                             </div>

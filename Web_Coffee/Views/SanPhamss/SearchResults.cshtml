@@ -6,24 +6,46 @@
 
 <h2>Search Results</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.First().TenSanPham)</th>
-            <th>@Html.DisplayNameFor(model => model.First().LoaiSanPham.TenLoaiSanPham)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.TenSanPham)</td>
-                <td>@Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSanPham)</td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.MaSanPham })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<style>
+    .row {
+        margin-top: 60px;
+        margin-left: 84px;
+        margin-right: 84px;
+    }
+
+    .no-results {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 18px;
+        color: red;
+    }
+</style>
+
+@if (!Model.Any())
+{
+    <div class="no-results">
+        Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <a href="@Url.Action("Details", "SanPhamss", new { id = item.MaSanPham })">
+                            <img class="card-img-top" src="@item.Hinhanh" style="height: 200px;">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.TenSanPham</h5>
+                            <p class="card-text">@item.LoaiSanPham.TenLoaiSanPham</p>
+                            @*@Html.ActionLink("Details", "Details", new { id = item.MaSanPham }, new { @class = "btn btn-primary" })*@
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

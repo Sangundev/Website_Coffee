@@ -42,7 +42,8 @@ namespace Web_Coffee.Controllers
         {
             if (string.IsNullOrEmpty(searchTerm))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.Message = "Vui lòng nhập từ khóa tìm kiếm.";
+                return View("SearchResults", new List<SanPham>());
             }
 
             var searchResults = db.SanPhams
@@ -52,11 +53,13 @@ namespace Web_Coffee.Controllers
 
             if (!searchResults.Any())
             {
-                return HttpNotFound("No products found matching the search term.");
+                ViewBag.Message = "Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.";
             }
 
             return View("SearchResults", searchResults);
         }
+
+
 
         protected override void Dispose(bool disposing)
         {
