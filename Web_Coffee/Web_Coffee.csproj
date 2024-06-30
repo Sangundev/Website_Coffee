@@ -392,6 +392,7 @@
     <Content Include="Views\SanPhamss\Details.cshtml" />
     <Content Include="Views\SanPhamss\Index.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\SanPhamss\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

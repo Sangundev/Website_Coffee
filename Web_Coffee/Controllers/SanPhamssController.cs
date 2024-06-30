@@ -37,6 +37,27 @@ namespace Web_Coffee.Controllers
             return View(sanPham);
         }
 
+
+        public ActionResult Search(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var searchResults = db.SanPhams
+                                  .Include(s => s.LoaiSanPham)
+                                  .Where(s => s.TenSanPham.Contains(searchTerm))
+                                  .ToList();
+
+            if (!searchResults.Any())
+            {
+                return HttpNotFound("No products found matching the search term.");
+            }
+
+            return View("SearchResults", searchResults);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

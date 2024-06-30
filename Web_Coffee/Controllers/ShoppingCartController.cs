@@ -79,6 +79,73 @@ namespace Web_Coffee.Controllers
         //    return PartialView("_CheckoutPopup");
         //}
 
+        //[HttpPost]
+        //public ActionResult ProcessCheckout()
+        //{
+        //    var cart = Session["Cart"] as List<SanPham>;
+
+        //    if (cart != null && cart.Count > 0)
+        //    {
+        //        try
+        //        {
+        //            var userId = User.Identity.GetUserId(); // Assuming this retrieves the user ID
+
+        //            // Create a new HoaDon (Invoice) object
+        //            var hoaDon = new HoaDon
+        //            {
+        //                MaKhachHang = 10, // Assign the logged-in user's ID
+        //                MaNhanVien = 1, // Replace with actual employee ID
+        //                NgayLapHoaDon = DateTime.Now,
+        //                TongTien = cart.Sum(item => item.GiaBan), // Calculate total price from cart
+        //                GhiChu = "Checkout from shopping cart"
+        //            };
+
+        //            // Add the invoice to the database
+        //            db.HoaDons.Add(hoaDon);
+        //            db.SaveChanges(); // Save changes to the database to get the invoice ID
+
+        //            // Loop through each item in the cart and create a ChiTietHoaDon (Invoice Detail)
+        //            foreach (var item in cart)
+        //            {
+        //                var chiTietHoaDon = new ChiTietHoaDon
+        //                {
+        //                    MaHoaDon = hoaDon.MaHoaDon, // Assign the invoice ID
+        //                    MaSanPham = item.MaSanPham,
+        //                    SoLuong = 1, // Assuming each item is added once
+        //                    TongTien = item.GiaBan,
+        //                    GhiChu = "Detail for invoice"
+        //                };
+
+        //                db.ChiTietHoaDons.Add(chiTietHoaDon); // Add detail to the database
+        //            }
+
+        //            db.SaveChanges(); // Save changes to the database
+
+        //            // Clear the cart after successful checkout
+        //            Session["Cart"] = null;
+
+        //            // Display success message
+        //            ViewBag.Message = "Checkout successful!";
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Log or handle any exceptions appropriately
+        //            ViewBag.Message = "An error occurred during checkout.";
+        //            // Optionally log the exception for debugging
+        //            // Log.Error("Error during checkout", ex);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Display error message if cart is empty
+        //        ViewBag.Message = "Your cart is empty!";
+        //    }
+
+        //    // Redirect to the home page or a confirmation page
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
         [HttpPost]
         public ActionResult ProcessCheckout()
         {
@@ -93,7 +160,7 @@ namespace Web_Coffee.Controllers
                     // Create a new HoaDon (Invoice) object
                     var hoaDon = new HoaDon
                     {
-                        MaKhachHang = 10, // Assign the logged-in user's ID
+                        MaKhachHang = 10, // Replace with actual user ID or logic to get user ID
                         MaNhanVien = 1, // Replace with actual employee ID
                         NgayLapHoaDon = DateTime.Now,
                         TongTien = cart.Sum(item => item.GiaBan), // Calculate total price from cart
@@ -124,13 +191,16 @@ namespace Web_Coffee.Controllers
                     // Clear the cart after successful checkout
                     Session["Cart"] = null;
 
-                    // Display success message
-                    ViewBag.Message = "Checkout successful!";
+                    // Set success message for displaying on home page
+                    TempData["Success"] = "Purchase successful!";
+
+                    // Redirect to the home page to display success message
+                    return RedirectToAction("Index", "ShoppingCart");
                 }
                 catch (Exception ex)
                 {
                     // Log or handle any exceptions appropriately
-                    ViewBag.Message = "An error occurred during checkout.";
+                    TempData["Error"] = "An error occurred during checkout.";
                     // Optionally log the exception for debugging
                     // Log.Error("Error during checkout", ex);
                 }
@@ -138,11 +208,11 @@ namespace Web_Coffee.Controllers
             else
             {
                 // Display error message if cart is empty
-                ViewBag.Message = "Your cart is empty!";
+                TempData["Error"] = "Your cart is empty!";
             }
 
             // Redirect to the home page or a confirmation page
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
 

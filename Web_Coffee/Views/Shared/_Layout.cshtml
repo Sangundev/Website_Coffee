@@ -41,6 +41,7 @@
     <!-- ===============================================-->
     <link href="~/Content/Layout/css/theme.css" rel="stylesheet" />
 
+
 </head>
 
 
@@ -57,51 +58,28 @@
                     <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">CàfeRuNam</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+
                 @if (Request.IsAuthenticated)
                 {
-                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    var currentUserId = User.Identity.GetUserId();
+                    var currentUser = listUser.FirstOrDefault(u => u.Id == currentUserId);
+                    if (currentUser != null)
                     {
-                        @Html.AntiForgeryToken()
-                        var currentUserId = User.Identity.GetUserId();
-                        var currentUser = listUser.FirstOrDefault(u => u.Id == currentUserId);
-                        if (currentUser != null)
-                        {
-                            <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
-                                <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                                    <p class="mb-0 fw-bold text-lg-center">Email: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal"> </span><span>@currentUser.Email</span></p>
+                        <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+                            <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+                                <p class="mb-0 fw-bold text-lg-center">Email: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal"> </span><span>@currentUser.Email</span></p>
+                            </div>
+                            @using (Html.BeginForm("Search", "SanPhamss", FormMethod.Get))
+                            {
+                                <div class="input-group-icon pe-2">
+                                    <i class="fas fa-search input-box-icon text-primary"></i>
+                                    <input class="form-control border-0 input-box bg-100"
+                                           type="search"
+                                           name="searchTerm"
+                                           placeholder="Search Food"
+                                           aria-label="Search" />
                                 </div>
-                                <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
-                                    <div class="input-group-icon pe-2">
-                                        <i class="fas fa-search input-box-icon text-primary"></i>
-                                        <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
-                                    </div>
-                                    <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-white shadow-warning text-warning position-relative">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            @Html.Action("CountCartItems", "ShoppingCart")
-                                            <span class="visually-hidden">items in cart</span>
-                                        </span>
-                                    </a>
-
-                                    <button href=" @Url.Action("LogOff", "Account")" class="btn btn-white shadow-warning text-warning" type="submit"> <i class="fas fa-user me-2"></i>LogOff</button>
-                                </form>
-                            </div>
-                        }
-                    }
-                }
-                else
-                {
-
-                    <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
-                        <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                            <p class="mb-0 fw-bold text-lg-center">Email: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal"> </span><span>Null</span></p>
-                        </div>
-                        <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
-                            <div class="input-group-icon pe-2">
-                                <i class="fas fa-search input-box-icon text-primary"></i>
-                                <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
-                            </div>
-                            @* @Html.Partial("_LoginPartial") *@
+                            }
                             <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-white shadow-warning text-warning position-relative">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -109,15 +87,46 @@
                                     <span class="visually-hidden">items in cart</span>
                                 </span>
                             </a>
-
-                            <a href="@Url.Action("Login", "Account")" class="btn btn-white shadow-warning text-warning me-2">
-                                <i class="fas fa-user me-2"></i>Login
-                            </a>
-
-                        </form>
-                    </div>
-
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-white shadow-warning text-warning" type="submit">
+                                    <i class="fas fa-user me-2"></i>LogOff
+                                </button>
+                            }
+                        </div>
+                    }
                 }
+                else
+                {
+                    <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+                        <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+                            <p class="mb-0 fw-bold text-lg-center">Email: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal"> </span><span>Null</span></p>
+                        </div>
+                        @using (Html.BeginForm("Search", "SanPhamss", FormMethod.Get))
+                        {
+                            <div class="input-group-icon pe-2">
+                                <i class="fas fa-search input-box-icon text-primary"></i>
+                                <input class="form-control border-0 input-box bg-100"
+                                       type="search"
+                                       name="searchTerm"
+                                       placeholder="Search Food"
+                                       aria-label="Search" />
+                            </div>
+                        }
+                        <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-white shadow-warning text-warning position-relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                @Html.Action("CountCartItems", "ShoppingCart")
+                                <span class="visually-hidden">items in cart</span>
+                            </span>
+                        </a>
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-white shadow-warning text-warning me-2">
+                            <i class="fas fa-user me-2"></i>Login
+                        </a>
+                    </div>
+                }
+
             </div>
         </nav>
         @RenderBody();
